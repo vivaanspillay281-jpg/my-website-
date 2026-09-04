@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Sign in to Vivaan Pillay's portfolio.">
+<title>Sign in | Vivaan Pillay</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.auth-page{min-height:100vh;display:grid;place-items:center;padding:40px 20px;background:radial-gradient(circle at 20% 20%,rgba(6,182,212,.12),transparent 28%),radial-gradient(circle at 80% 80%,rgba(139,92,246,.13),transparent 28%),var(--bg,#07070a)}
+.auth-shell{width:min(100%,520px);border:1px solid var(--border,rgba(255,255,255,.12));background:rgba(15,15,20,.78);backdrop-filter:blur(18px);padding:42px;border-radius:22px;box-shadow:0 30px 100px rgba(0,0,0,.35)}
+.auth-brand{display:inline-block;color:inherit;text-decoration:none;font-weight:700;font-size:18px;margin-bottom:55px}.auth-brand span{color:var(--cyan,#06b6d4)}
+.auth-shell .eyebrow{margin-bottom:12px}.auth-shell h1{font-size:clamp(42px,8vw,72px);line-height:.95;margin:0 0 18px}.auth-subtitle{color:#a1a1aa;line-height:1.6;margin-bottom:30px}
+.auth-field{display:grid;gap:8px;margin-bottom:18px}.auth-field label{font:700 10px 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.auth-field input{width:100%;box-sizing:border-box;padding:14px 15px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.04);color:inherit;font:inherit;outline:none}.auth-field input:focus{border-color:var(--cyan,#06b6d4);box-shadow:0 0 0 3px rgba(6,182,212,.12)}
+.auth-submit{width:100%;margin-top:4px}.auth-message{min-height:22px;margin:16px 0 0;color:#fbbf24;font-size:13px;line-height:1.5}.auth-toggle{width:100%;margin-top:12px;background:none;border:0;color:#a1a1aa;cursor:pointer;padding:10px}.auth-toggle:hover{color:#fff}
+.auth-back{display:inline-block;margin-top:28px;color:#a1a1aa;text-decoration:none;font-size:13px}.auth-back:hover{color:#fff}
+html[data-theme="light"] .auth-page{--bg:#f4f7f8}html[data-theme="light"] .auth-shell{background:rgba(255,255,255,.82)}html[data-theme="light"] .auth-field input{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.14)}
+@media(max-width:560px){.auth-shell{padding:28px}.auth-brand{margin-bottom:38px}}
+</style>
+</head>
+<body>
+<main class="auth-page">
+<section class="auth-shell" aria-labelledby="auth-title">
+<a class="auth-brand" href="index.html">Vivaan Pillay<span>.</span></a>
+<p class="eyebrow">PRIVATE PORTFOLIO ACCESS</p>
+<h1 id="auth-title">Welcome back.</h1>
+<p id="auth-subtitle" class="auth-subtitle">Sign in to continue to the portfolio.</p>
+<form id="auth-form">
+<div class="auth-field"><label for="auth-email">Email</label><input id="auth-email" name="email" type="email" autocomplete="email" required></div>
+<div class="auth-field"><label for="auth-password">Password</label><input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="6" required></div>
+<button id="auth-submit" class="button primary auth-submit" type="submit">Sign in</button>
+<p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+<button id="auth-toggle" class="auth-toggle" type="button">New here? Create an account</button>
+</form>
+<a class="auth-back" href="index.html">← Back to public homepage</a>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
+<script src="auth.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
