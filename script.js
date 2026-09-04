@@ -1,61 +1,25 @@
-const menu=document.querySelector('.menu');const links=document.querySelector('.nav-links');if(menu){menu.addEventListener('click',()=>{links.classList.toggle('open')})}document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));const navLinks=document.querySelector('.nav-links');let themeToggle=document.querySelector('.theme-toggle');if(!themeToggle&&navLinks){themeToggle=document.createElement('button');themeToggle.className='theme-toggle';navLinks.appendChild(themeToggle)}const savedTheme=localStorage.getItem('vivaan-theme');if(savedTheme==='light'){document.documentElement.dataset.theme='light'}else{document.documentElement.dataset.theme='dark'}const updateThemeButton=()=>{if(themeToggle){const light=document.documentElement.dataset.theme==='light';themeToggle.textContent=light?'☾ Dark':'☀ Light';themeToggle.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');themeToggle.setAttribute('title',light?'Switch to dark theme':'Switch to light theme')}};updateThemeButton();if(themeToggle){themeToggle.addEventListener('click',()=>{const light=document.documentElement.dataset.theme==='light';document.documentElement.dataset.theme=light?'dark':'light';localStorage.setItem('vivaan-theme',light?'dark':'light');updateThemeButton()})}
+const menu=document.querySelector('.menu');const links=document.querySelector('.nav-links');if(menu&&links){menu.addEventListener('click',()=>links.classList.toggle('open'));document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')))}const navLinks=document.querySelector('.nav-links');let themeToggle=document.querySelector('.theme-toggle');if(!themeToggle&&navLinks){themeToggle=document.createElement('button');themeToggle.className='theme-toggle';navLinks.appendChild(themeToggle)}const savedTheme=localStorage.getItem('vivaan-theme');document.documentElement.dataset.theme=savedTheme==='light'?'light':'dark';const updateThemeButton=()=>{if(themeToggle){const light=document.documentElement.dataset.theme==='light';themeToggle.textContent=light?'☾ Dark':'☀ Light';themeToggle.setAttribute('aria-label',light?'Switch to dark theme':'Switch to light theme');themeToggle.setAttribute('title',light?'Switch to dark theme':'Switch to light theme')}};updateThemeButton();if(themeToggle){themeToggle.addEventListener('click',()=>{const light=document.documentElement.dataset.theme==='light';document.documentElement.dataset.theme=light?'dark':'light';localStorage.setItem('vivaan-theme',light?'dark':'light');updateThemeButton()})}
 
-/* Landing-page polish + money animation. The hero intentionally restarts on every page load. */
 const hero=document.querySelector('.money-hero');
 if(hero){
-  const stage=hero.querySelector('.money-field');
-  if(stage){
-    stage.innerHTML='';
-    const fragment=document.createDocumentFragment();
-    for(let i=0;i<34;i++){
-      const bill=document.createElement('span');
-      bill.className='bill';
-      const left=2+Math.random()*96;
-      const top=-8+Math.random()*105;
-      const duration=(6.5+Math.random()*6.5).toFixed(2)+'s';
-      const delay=(-Math.random()*duration.replace('s','')).toFixed(2)+'s';
-      const rotation=(-45+Math.random()*90).toFixed(1)+'deg';
-      bill.style.left=left+'%';bill.style.top=top+'%';bill.style.setProperty('--duration',duration);bill.style.setProperty('--delay',delay);bill.style.setProperty('--rot',rotation);
-      bill.style.setProperty('--drift',(Math.random()*220-110).toFixed(0)+'px');
-      fragment.appendChild(bill);
-    }
-    stage.appendChild(fragment);
-  }
-
-  const polish=document.createElement('style');
-  polish.textContent=`
-    .money-hero{cursor:default}
-    .money-hero .hero-copy{animation:heroCopyIn .9s cubic-bezier(.2,.8,.2,1) both}
-    .money-hero .hero-copy .eyebrow{animation:heroItemIn .7s .08s both}
-    .money-hero h1{animation:heroTitleIn 1s .14s cubic-bezier(.16,1,.3,1) both}
-    .money-hero .hero-text{animation:heroItemIn .8s .28s both}
-    .money-hero .hero-actions{animation:heroItemIn .8s .38s both}
-    .money-hero .mini-stats{animation:heroItemIn .8s .48s both}
-    .money-field{perspective:900px}
-    .money-field .bill{will-change:transform,opacity;transform-style:preserve-3d}
-    .money-field .bill:nth-child(3n){filter:brightness(1.08)}
-    .money-field .bill:nth-child(4n){filter:saturate(.72)}
-    .hero-person{will-change:transform}
-    .hero-person svg{filter:drop-shadow(0 0 30px rgba(6,182,212,.08))}
-    .hero-kicker{opacity:.7;animation:kickerIn 1.4s .5s both}
-    .money-hero .hero-copy:after{content:'MARKET • MONEY • MOMENTUM';display:block;margin-top:34px;font:700 8px/1 'Space Mono',monospace;letter-spacing:.28em;color:rgba(255,255,255,.34);animation:heroItemIn .8s .62s both}
-    html[data-theme="light"] .money-hero .hero-copy:after{color:rgba(17,24,39,.4)}
-    @keyframes heroCopyIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-    @keyframes heroItemIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-    @keyframes heroTitleIn{from{opacity:0;transform:translateY(35px) scale(.97);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
-    @keyframes kickerIn{from{opacity:0;transform:translateY(-18px)}to{opacity:.7;transform:none}}
-    @media(max-width:800px){.money-hero .hero-copy:after{margin-top:25px}.money-field .bill{opacity:.72}}
-    @media(prefers-reduced-motion:reduce){.money-hero .hero-copy,.money-hero .hero-copy .eyebrow,.money-hero h1,.money-hero .hero-text,.money-hero .hero-actions,.money-hero .mini-stats,.hero-kicker,.money-hero .hero-copy:after{animation:none!important}}
-  `;
-  document.head.appendChild(polish);
-
-  /* Subtle pointer light gives the hero a premium interactive feel without distracting from the money. */
-  hero.addEventListener('pointermove',event=>{
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    const rect=hero.getBoundingClientRect();
-    const x=((event.clientX-rect.left)/rect.width*100).toFixed(1);const y=((event.clientY-rect.top)/rect.height*100).toFixed(1);
-    hero.style.setProperty('--pointer-x',x+'%');hero.style.setProperty('--pointer-y',y+'%');
-  });
+ const stage=hero.querySelector('.money-field');
+ if(stage){stage.innerHTML='';const f=document.createDocumentFragment();for(let i=0;i<38;i++){const b=document.createElement('span');b.className='bill';b.style.left=(2+Math.random()*96)+'%';b.style.top=(-10+Math.random()*110)+'%';b.style.setProperty('--duration',(6.2+Math.random()*7).toFixed(2)+'s');b.style.setProperty('--delay',(-Math.random()*12).toFixed(2)+'s');b.style.setProperty('--rot',(-50+Math.random()*100).toFixed(1)+'deg');f.appendChild(b)}stage.appendChild(f)}
+ const premium=document.createElement('div');premium.className='premium-hero-ui';premium.innerHTML='<div class="market-status"><span class="status-dot"></span><span>PORTFOLIO / 2026</span><b>MARKET READY</b></div><div class="hero-data-card"><div class="data-top"><span>INVESTMENT MINDSET</span><span>01 / 04</span></div><div class="data-number">DATA <i>→</i> DECISION</div><div class="data-bars"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class="data-bottom"><span>RESEARCH</span><span>ANALYSIS</span><span>STRATEGY</span></div></div>';
+ hero.appendChild(premium);
+ const ticker=document.createElement('div');ticker.className='finance-ticker';ticker.innerHTML='<div><span>FINANCE</span><i>•</i><span>INVESTMENT</span><i>•</i><span>MARKET RESEARCH</span><i>•</i><span>FINANCIAL ANALYSIS</span><i>•</i><span>PORTFOLIO THINKING</span><i>•</i><span>FINANCE</span><i>•</i><span>INVESTMENT</span><i>•</i><span>MARKET RESEARCH</span><i>•</i></div>';hero.appendChild(ticker);
+ const polish=document.createElement('style');polish.textContent=`
+.money-hero{--pointer-x:72%;--pointer-y:45%;min-height:calc(100vh - 76px);background:radial-gradient(circle at var(--pointer-x) var(--pointer-y),rgba(6,182,212,.12),transparent 20%),radial-gradient(circle at 84% 22%,rgba(139,92,246,.15),transparent 25%),linear-gradient(120deg,#050507 0%,#0b0b10 48%,#07070a 100%)}
+.money-hero:before{background:linear-gradient(90deg,rgba(5,5,7,.99) 0%,rgba(5,5,7,.9) 39%,rgba(5,5,7,.34) 70%,rgba(5,5,7,.7) 100%),radial-gradient(circle at 72% 65%,rgba(6,182,212,.08),transparent 35%)}
+.money-hero .hero-copy{max-width:760px;padding-top:115px;padding-bottom:125px}.money-hero h1{font-size:clamp(78px,11.5vw,168px);text-shadow:0 25px 80px rgba(0,0,0,.72)}.money-hero .hero-text{max-width:650px}.money-hero .mini-stats{gap:0}.money-hero .mini-stats div{min-width:145px;margin-right:25px}.money-hero .button.primary{padding:14px 21px}.premium-hero-ui{position:absolute;right:5.5%;top:25%;z-index:4;width:min(300px,25vw);min-width:245px;pointer-events:none}.market-status{display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.12);background:rgba(8,8,12,.44);backdrop-filter:blur(16px);padding:10px 13px;border-radius:4px;font:700 8px 'Space Mono',monospace;letter-spacing:.12em;color:rgba(255,255,255,.58);box-shadow:0 18px 50px rgba(0,0,0,.22)}.market-status b{margin-left:auto;color:#4ade80;font-size:7px}.status-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e;animation:statusPulse 1.8s ease-in-out infinite}.hero-data-card{margin-top:12px;padding:17px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));backdrop-filter:blur(20px);box-shadow:0 25px 80px rgba(0,0,0,.35);border-radius:5px}.data-top,.data-bottom{display:flex;justify-content:space-between;color:rgba(255,255,255,.4);font:700 7px 'Space Mono',monospace;letter-spacing:.12em}.data-number{font:600 25px 'Playfair Display',serif;color:#fff;margin:20px 0 15px;letter-spacing:-.04em}.data-number i{font:normal 16px 'DM Sans',sans-serif;color:var(--cyan)}.data-bars{height:70px;display:flex;align-items:end;gap:5px;border-bottom:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,transparent,rgba(6,182,212,.025));padding:0 2px}.data-bars span{flex:1;height:var(--h,35%);background:linear-gradient(to top,rgba(6,182,212,.22),rgba(6,182,212,.8));clip-path:polygon(0 100%,0 28%,100% 0,100% 100%);animation:barBreath 3s ease-in-out infinite alternate}.data-bars span:nth-child(1){height:25%}.data-bars span:nth-child(2){height:39%;animation-delay:.1s}.data-bars span:nth-child(3){height:31%;animation-delay:.2s}.data-bars span:nth-child(4){height:48%;animation-delay:.3s}.data-bars span:nth-child(5){height:44%;animation-delay:.4s}.data-bars span:nth-child(6){height:61%;animation-delay:.5s}.data-bars span:nth-child(7){height:52%;animation-delay:.6s}.data-bars span:nth-child(8){height:72%;animation-delay:.7s}.data-bars span:nth-child(9){height:65%;animation-delay:.8s}.data-bars span:nth-child(10){height:83%;animation-delay:.9s}.data-bars span:nth-child(11){height:74%;animation-delay:1s}.data-bars span:nth-child(12){height:94%;animation-delay:1.1s}.data-bottom{padding-top:11px}.finance-ticker{position:absolute;left:0;right:0;bottom:0;z-index:5;overflow:hidden;border-top:1px solid rgba(255,255,255,.09);border-bottom:1px solid rgba(255,255,255,.05);background:rgba(4,4,7,.38);backdrop-filter:blur(10px);white-space:nowrap}.finance-ticker div{display:inline-flex;align-items:center;gap:24px;min-width:max-content;padding:13px 0;font:700 8px 'Space Mono',monospace;letter-spacing:.18em;color:rgba(255,255,255,.36);animation:tickerMove 28s linear infinite}.finance-ticker span:first-child{color:var(--cyan)}.finance-ticker i{font-style:normal;color:rgba(6,182,212,.6)}
+.money-hero .hero-copy:after{content:'MARKET • MONEY • MOMENTUM';display:block;margin-top:34px;font:700 8px/1 'Space Mono',monospace;letter-spacing:.28em;color:rgba(255,255,255,.34)}
+@keyframes statusPulse{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}@keyframes barBreath{from{transform:scaleY(.88);transform-origin:bottom}to{transform:scaleY(1.02);transform-origin:bottom}}@keyframes tickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+html[data-theme="light"] .premium-hero-ui .market-status,html[data-theme="light"] .premium-hero-ui .hero-data-card{background:rgba(255,255,255,.62);border-color:rgba(17,24,39,.14);box-shadow:0 25px 70px rgba(17,24,39,.1)}html[data-theme="light"] .market-status,html[data-theme="light"] .data-top,html[data-theme="light"] .data-bottom{color:rgba(17,24,39,.52)}html[data-theme="light"] .data-number{color:#111827}html[data-theme="light"] .finance-ticker{background:rgba(255,255,255,.55);border-color:rgba(17,24,39,.1)}html[data-theme="light"] .finance-ticker div{color:rgba(17,24,39,.46)}
+@media(max-width:1050px){.premium-hero-ui{right:2%;width:235px;min-width:0;top:29%;opacity:.78}.money-hero .hero-copy{max-width:680px}}
+@media(max-width:800px){.money-hero{min-height:800px}.money-hero .hero-copy{padding:80px 0 150px}.premium-hero-ui{right:18px;top:40px;width:205px;opacity:.68;transform:scale(.82);transform-origin:top right}.money-hero .hero-copy{position:relative;z-index:6}.money-hero h1{font-size:clamp(64px,18vw,108px)}.finance-ticker div{animation-duration:22s}.hero-person{right:-20%;opacity:.42}}
+@media(prefers-reduced-motion:reduce){.status-dot,.data-bars span,.finance-ticker div{animation:none!important}}
+`;
+ document.head.appendChild(polish);
+ hero.addEventListener('pointermove',e=>{if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;const r=hero.getBoundingClientRect();hero.style.setProperty('--pointer-x',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');hero.style.setProperty('--pointer-y',((e.clientY-r.top)/r.height*100).toFixed(1)+'%')});
 }
 
-const revealTargets=document.querySelectorAll('.section,.project,.skill,.achievement,.contact,.hero-card');revealTargets.forEach(el=>el.classList.add('reveal'));const observer=new IntersectionObserver(entries=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.12});revealTargets.forEach(el=>observer.observe(el));document.querySelectorAll('.project,.skill').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(700px) rotateX(${y*-2}deg) rotateY(${x*2}deg) translateY(-5px)`});el.addEventListener('mouseleave',()=>{el.style.transform=''})});
+const revealTargets=document.querySelectorAll('.section,.project,.skill,.achievement,.contact,.hero-card');revealTargets.forEach(el=>el.classList.add('reveal'));const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.12});revealTargets.forEach(el=>observer.observe(el));document.querySelectorAll('.project,.skill').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(700px) rotateX(${y*-2}deg) rotateY(${x*2}deg) translateY(-5px)`});el.addEventListener('mouseleave',()=>el.style.transform='')});
