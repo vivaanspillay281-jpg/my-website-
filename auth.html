@@ -14,8 +14,9 @@
 .auth-field{display:grid;gap:8px;margin-bottom:18px}.auth-field label{font:700 10px 'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase}.auth-field input{width:100%;box-sizing:border-box;padding:14px 15px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.04);color:inherit;font:inherit;outline:none}.auth-field input:focus{border-color:var(--cyan,#06b6d4);box-shadow:0 0 0 3px rgba(6,182,212,.12)}
 .auth-submit{width:100%;margin-top:4px}.auth-message{min-height:22px;margin:16px 0 0;color:#fbbf24;font-size:13px;line-height:1.5}.auth-toggle{width:100%;margin-top:12px;background:none;border:0;color:#a1a1aa;cursor:pointer;padding:10px}.auth-toggle:hover{color:#fff}
 .auth-back{display:inline-block;margin-top:28px;color:#a1a1aa;text-decoration:none;font-size:13px}.auth-back:hover{color:#fff}
+.auth-footer{width:min(1100px,calc(100% - 48px));margin:0 auto;padding:25px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;font-size:10px;color:#71717a}.auth-footer-contact{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.auth-footer-contact a{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;transition:.25s}.auth-footer-contact a:hover{color:var(--cyan)}.auth-footer-icon{width:18px;height:18px;display:inline-grid;place-items:center;font-size:18px}
 html[data-theme="light"] .auth-page{--bg:#f4f7f8}html[data-theme="light"] .auth-shell{background:rgba(255,255,255,.82)}html[data-theme="light"] .auth-field input{background:rgba(0,0,0,.03);border-color:rgba(0,0,0,.14)}
-@media(max-width:560px){.auth-shell{padding:28px}.auth-brand{margin-bottom:38px}}
+@media(max-width:560px){.auth-shell{padding:28px}.auth-brand{margin-bottom:38px}.auth-footer{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -35,6 +36,7 @@ html[data-theme="light"] .auth-page{--bg:#f4f7f8}html[data-theme="light"] .auth-
 <a class="auth-back" href="index.html">← Back to public homepage</a>
 </section>
 </main>
+<footer class="auth-footer"><span>© 2026 Vivaan Pillay</span><div class="auth-footer-contact"><a href="mailto:vivaanspillay281@gmail.com"><span class="auth-footer-icon" aria-hidden="true">✉</span><span>vivaanspillay281@gmail.com</span></a><a href="https://www.instagram.com/vivaan_pillay/" target="_blank" rel="noreferrer"><span class="auth-footer-icon" aria-hidden="true">◎</span><span>@vivaan_pillay</span></a></div></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.115.0"></script>
 <script src="auth.js"></script>
 <script src="script.js"></script>
